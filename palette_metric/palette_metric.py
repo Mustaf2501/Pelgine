@@ -3,6 +3,8 @@ from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie1976
 import matplotlib.colors as colors
 
+# Paper : https://www.linkedin.com/in/etienne-ferrier-913012b6/
+
 
 def metric(pal1, pal2):
     """
@@ -58,5 +60,3 @@ def metric(pal1, pal2):
                     color_distances.pop(j, None)
 
         return palette_distance
-
-
