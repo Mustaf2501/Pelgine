@@ -2,6 +2,8 @@ from colormath.color_objects import sRGBColor, LabColor
 from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie1976
 import matplotlib.colors as colors
+from math import sqrt
+import numpy
 
 # Paper : https://www.linkedin.com/in/etienne-ferrier-913012b6/
 
@@ -26,27 +28,17 @@ def metric(pal1, pal2):
         n = len(pal1)  # size of both palettes
         color_distances = {}  # key: (i,j), value: color distance between pal[i] and pal[j]
         palette_distance = 0
-
-        '''
-        Converts each hexadecimal color value (within each palette) into a sRGB triplet
-        This step is needed so that we later convert the sRGB triplets into LAB for comparison with delta_e_cie1976
-        '''
-        for i in range(0, n):
-            pal1[i] = colors.hex2color(pal1[i])
-            pal2[i] = colors.hex2color(pal2[i])
-
+        
         '''
         Calculates the distances between all possible pairs of colors between the two palettes
         This is an intermediate step to calculate the distance between the two palettes. 
         '''
         for i in range(0, n):
             for j in range(0, n):
-                color1_rgb = sRGBColor(pal1[i][0], pal1[i][1], pal1[i][2])
-                color2_rgb = sRGBColor(pal2[j][0], pal2[j][1], pal2[j][2])
-                color1_lab = convert_color(color1_rgb, LabColor)
-                color2_lab = convert_color(color2_rgb, LabColor)
-                color_distances[(i, j)] = delta_e_cie1976(color1_lab, color2_lab)
-
+                color1 = numpy.array((pal1[i][0], pal1[i][1], pal1[i][2]))
+                color2 = numpy.array((pal2[j][0], pal2[j][1], pal2[j][2]))
+                color_distances[(i, j)] = numpy.linalg.norm(color1-color2) # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy
+                
         '''
         Calculates the distance between the two color palettes using the distances between the colors of each palette
         The calculated distance is the sum n best analogies between the palettes
@@ -59,4 +51,23 @@ def metric(pal1, pal2):
                 if j[0] == min_val_edge[0][0] or j[1] == min_val_edge[0][1]:
                     color_distances.pop(j, None)
 
-        return palette_distance
+        return sqrt(palette_distance)
+
+
+
+# pal = ['#ffffff','#bfcff2']
+# print(metric(pal, pal))
+# print(colors.hex2color(pal[0]))
+# print(colors.hex2color(pal[1]))
+# print(sRGBColor(pal[0][0], pal[0][1], pal[0][2]))
+# print(convert_color(sRGBColor(pal[0][0], pal[0][1], pal[0][2]), LabColor))
+
+# print(sRGBColor(pal[1][0], pal[1][1], pal[1][2]))
+# print(convert_color(sRGBColor(pal[1][0], pal[1][1], pal[1][2]), LabColor))
+
+#LabColor (lab_l:100.0000 lab_a:-0.0005 lab_b:-0.0086) #ffffff
+#LabColor (lab_l:82.9729 lab_a:1.8873 lab_b:-19.0057) #bfcff2
+
+pal1 = numpy.array([(100.0000, -0.0005, -0.0086), (82.9729, 1.8873, -19.0057)]) # [#ffffff, #bfcff2]
+pal2 = numpy.array([(100.0000, -0.0005, -0.0086), (82.9729, 1.8873, -19.0057)]) # [#ffffff, #bfcff2]
+print(metric(pal1, pal2))
