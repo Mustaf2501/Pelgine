@@ -1,2 +1,2 @@
 # Pelgine
-Search Artwork By Palette
+Explore the space of artworks in a new way
