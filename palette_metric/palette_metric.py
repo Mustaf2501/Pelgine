@@ -4,23 +4,77 @@ from colormath.color_diff import delta_e_cie1976
 import matplotlib.colors as colors
 from math import sqrt
 import numpy
+import time
+from PIL import Image
 
 # Paper : https://www.linkedin.com/in/etienne-ferrier-913012b6/
 
+def hex2Lab(pal):
+    """
+    Converts a list of hex values into a numpy array of Lab coordinates
+    This will be used to convert the user's search into the appropriate form (Lab coordinates)
+
+    Args:
+        pal1: numpy array containing colors in Lab colors
+        pal2: numpy array containing colors in Lab colors
+
+    Returns:
+        lower bound on distance between pal1 and pal2: float
+
+    """
+    lab = []
+    n = len(pal)
+
+    for i in range(0,n):
+        pal[i] = colors.hex2color(pal[i])
+
+    for i in range(0, n):
+        color_rgb = sRGBColor(pal[i][0], pal[i][1], pal[i][2])
+        color_lab = convert_color(color_rgb, LabColor)
+        lab.append( [color_lab.lab_l,color_lab.lab_a,color_lab.lab_b])
+
+    return numpy.array(lab)
+
+
+def lowerbound(pal1,pal2):
+    """
+     Calculates the lower bound on perceptual distance between two color palette
+     This calculation is computationally cheaper than metric(pal1,pal2), and we can use it to filter artworks
+
+     Args:
+         pal1: numpy array containing colors in Lab colors
+         pal2: numpy array containing colors in Lab colors
+
+     Returns:
+        lower bound on distance between pal1 and pal2: float
+     """
+    n = len(pal1)
+    sumx = numpy.array([0,0,0])
+    sumy = numpy.array([0,0,0])
+
+    for i in range(0, n):
+        sumx = numpy.add(sumx,pal1[i])
+        sumy = numpy.add(sumy, pal2[i])
+
+    sumx = (1/n)*sumx
+    sumy = (1/n)*sumy
+
+    subxy = numpy.subtract(sumx,sumy)
+
+    return (sqrt(n))*numpy.linalg.norm(subxy)
 
 def metric(pal1, pal2):
     """
-       Calculates the perceptual distance between two color palettes of the same length.
+    Calculates the perceptual distance between two color palettes of the same length.
 
-       Args:
-         pal1: list containing hexadecimal color strings
-         pal2: list containing hexadecimal color strings
-         Example: pal1 = ['#ffffff','#bfcff2'] and pal2 = ['#a21ffb','#c6c2a2']
+    Args:
+        pal1: numpy array containing colors in Lab colors
+        pal2: numpy array containing colors in Lab colors
 
-       Returns:
-         palette_distance : float
-         perceptual distance between pal1 and pal2
-       """
+    Returns:
+        palette_distance : float
+        perceptual distance between pal1 and pal2
+    """
 
     if len(pal1) != len(pal2):
         raise ValueError("The two palettes must be of the same size")
@@ -35,9 +89,9 @@ def metric(pal1, pal2):
         '''
         for i in range(0, n):
             for j in range(0, n):
-                color1 = numpy.array((pal1[i][0], pal1[i][1], pal1[i][2]))
-                color2 = numpy.array((pal2[j][0], pal2[j][1], pal2[j][2]))
-                color_distances[(i, j)] = numpy.linalg.norm(color1-color2) # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy
+                color1 = pal1[i]
+                color2 = pal2[j]
+                color_distances[(i, j)] = numpy.linalg.norm(color1-color2)**2  # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy
                 
         '''
         Calculates the distance between the two color palettes using the distances between the colors of each palette
@@ -52,22 +106,3 @@ def metric(pal1, pal2):
                     color_distances.pop(j, None)
 
         return sqrt(palette_distance)
-
-
-
-# pal = ['#ffffff','#bfcff2']
-# print(metric(pal, pal))
-# print(colors.hex2color(pal[0]))
-# print(colors.hex2color(pal[1]))
-# print(sRGBColor(pal[0][0], pal[0][1], pal[0][2]))
-# print(convert_color(sRGBColor(pal[0][0], pal[0][1], pal[0][2]), LabColor))
-
-# print(sRGBColor(pal[1][0], pal[1][1], pal[1][2]))
-# print(convert_color(sRGBColor(pal[1][0], pal[1][1], pal[1][2]), LabColor))
-
-#LabColor (lab_l:100.0000 lab_a:-0.0005 lab_b:-0.0086) #ffffff
-#LabColor (lab_l:82.9729 lab_a:1.8873 lab_b:-19.0057) #bfcff2
-
-pal1 = numpy.array([(100.0000, -0.0005, -0.0086), (82.9729, 1.8873, -19.0057)]) # [#ffffff, #bfcff2]
-pal2 = numpy.array([(100.0000, -0.0005, -0.0086), (82.9729, 1.8873, -19.0057)]) # [#ffffff, #bfcff2]
-print(metric(pal1, pal2))
