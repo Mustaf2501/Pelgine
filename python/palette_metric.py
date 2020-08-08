@@ -19,7 +19,7 @@ def hex2Lab(pal):
         pal2: numpy array containing colors in Lab colors
 
     Returns:
-        list containing the palette where each color is in LAB space 
+        list containing the palette where each color is in LAB space
 
     """
     lab = []
