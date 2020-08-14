@@ -10,7 +10,8 @@ import time
 def searchpalette():
 
     pal =["#465A67", "#DED3BB", "#DED3BB", "#E47F65", "#E47F65"]
-    extendpal(pal,5)
+
+
     search = hex2Lab(pal)
 
     t = TopKMaxHeap(50)

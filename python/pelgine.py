@@ -1,6 +1,6 @@
-from flask import Flask, redirect, url_for,render_template
+from flask import Flask ,render_template
 import sqlite3
-from python.palette_metric import metric, lowerbound, hex2Lab,extendpal
+from python.palette_metric import   hex2Lab,extendpal
 from python.tk_heap import TopKMaxHeap
 import numpy as np
 from heapq import *
@@ -16,10 +16,13 @@ def home():
 
 
 
-@app.route("/search/")
-def searchpalette():
+@app.route("/search/<palette>")
+def searchpalette(palette):
+
     t0 = time.time()
-    search = hex2Lab( ["#5F8E64", "#5F8E64", "#5F8E64", "#5F8E64", "#5F8E64"])
+    p = ["#465A67", "#DED3BB", "#DED3BB", "#E47F65", "#E47F65"]
+    extendpal(p,5)
+    search = hex2Lab( p )
 
     t = TopKMaxHeap(20)
     conn = sqlite3.connect("pelgine.db")
