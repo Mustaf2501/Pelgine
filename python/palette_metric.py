@@ -4,8 +4,8 @@ from colormath.color_diff import delta_e_cie1976
 import matplotlib.colors as colors
 from math import sqrt
 import numpy
-import time
-from PIL import Image
+
+import random
 
 # Paper : https://www.linkedin.com/in/etienne-ferrier-913012b6/
 
@@ -35,8 +35,28 @@ def hex2Lab(pal):
 
     return numpy.array(lab)
 
+def extendpal(pal, m ):
+
+    """
+    Extends the smaller palette to the same size as the larger one
+    This method ensures that we can compare palettes of different sizes
+
+    Args:
+        pal: the small palette, which contains Lab colors
+        m  : the size of the larger palette
+
+    Returns:
+        Smaller palette extended to match the size of the larger palette
+    """
+
+    n = len(pal)
+
+    for i in range(0,m-n):
+        pal.append(random.choice(pal)) # appends random Lab color to palette
+
 
 def lowerbound(pal1,pal2):
+
     """
      Calculates the lower bound on perceptual distance between two color palette
      This calculation is computationally cheaper than metric(pal1,pal2), and we can use it to filter artworks
@@ -48,6 +68,7 @@ def lowerbound(pal1,pal2):
      Returns:
         lower bound on distance between pal1 and pal2: float
      """
+
     n = len(pal1)
     sumx = numpy.array([0,0,0])
     sumy = numpy.array([0,0,0])
@@ -63,6 +84,7 @@ def lowerbound(pal1,pal2):
 
     return (sqrt(n))*numpy.linalg.norm(subxy)
 
+
 def metric(pal1, pal2):
     """
     Calculates the perceptual distance between two color palettes of the same length.
@@ -77,12 +99,12 @@ def metric(pal1, pal2):
     """
 
     if len(pal1) != len(pal2):
-        raise ValueError("The two palettes must be of the same size")
+        raise ValueError("The two palettes must be the same size")
     else:
         n = len(pal1)  # size of both palettes
         color_distances = {}  # key: (i,j), value: color distance between pal[i] and pal[j]
         palette_distance = 0
-        
+
         '''
         Calculates the distances between all possible pairs of colors between the two palettes
         This is an intermediate step to calculate the distance between the two palettes. 
@@ -91,8 +113,9 @@ def metric(pal1, pal2):
             for j in range(0, n):
                 color1 = pal1[i]
                 color2 = pal2[j]
-                color_distances[(i, j)] = numpy.linalg.norm(color1-color2)**2  # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy
-                
+                color_distances[(i, j)] = numpy.linalg.norm(
+                    color1 - color2) ** 2  # https://stackoverflow.com/questions/1401712/how-can-the-euclidean-distance-be-calculated-with-numpy
+
         '''
         Calculates the distance between the two color palettes using the distances between the colors of each palette
         The calculated distance is the sum n best analogies between the palettes

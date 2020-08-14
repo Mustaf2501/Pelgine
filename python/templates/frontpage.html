@@ -1,16 +1,29 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <title>
         Pelgine
     </title>
 </head>
-<body style="background-color:#eeede7">
-<nav class="navbar navbar-dark" style="background-color: #151512;">
+
+
+<body style="background-color:#f6fcf">
+<nav class="navbar navbar-dark" style="background-color: #031829;">
   <!-- Navbar content -->
       <a class="navbar-brand" href="#">Pelgine</a>
 </nav>
+    <div class="sticky">I will stick to the screen when you reach my scroll position
+
+
+
+<section>
+
+    <a href="#" class="button" id="basic">Click me!</a>
+</section>
+
+    </div>
+
 <h1>
     Pelgine
 </h1>
@@ -20,14 +33,48 @@
    Bruh
 </h1>
 
+
+
+
 {% endblock %}
 <p>
     ...
 </p>
 
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/vanilla-picker@2"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+<script>
+
+    /*
+        Create a new Picker instance and set the parent element.
+        By default, the color picker is a popup which appears when you click the parent.
+    */
+    var parent = document.querySelector('#basic');
+    var picker = new Picker(parent);
+
+    /*
+        You can do what you want with the chosen color using two callbacks: onChange and onDone.
+    */
+    picker.onChange = function(color) {
+        parent.style.background = color.rgbaString;
+    };
+
+    /* onDone is similar to onChange, but only called when you click 'Ok' */
+
+</script>
 
 </body>
 
