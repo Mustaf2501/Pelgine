@@ -1,6 +1,6 @@
-from flask import Flask, redirect, url_for,render_template
+
 import sqlite3
-from python.palette_metric import metric, lowerbound, hex2Lab,extendpal
+from python.palette_metric import   hex2Lab,extendpal
 from python.tk_heap import TopKMaxHeap
 import numpy as np
 from heapq import *
@@ -9,16 +9,15 @@ import time
 
 def searchpalette():
 
-    pal =["#465A67", "#DED3BB", "#DED3BB", "#E47F65", "#E47F65"]
+    t0 = time.time()
+    p = ["#465A67", "#DED3BB", "#DED3BB", "#E47F65", "#E47F65"]
 
-
-    search = hex2Lab(pal)
+    search = hex2Lab(p)
 
     t = TopKMaxHeap(50)
     conn = sqlite3.connect("pelgine.db")
     c = conn.cursor()
     c.execute("SELECT * FROM image")
-
 
     for x in c:
         lab1 = [float(y) for y in x[10].split(",")]
@@ -36,7 +35,12 @@ def searchpalette():
 
     conn.close()
 
-start = time.time()
+
+    t1 = time.time()
+    print(t1-t0)
+
+
+
+    return "hi"
+
 searchpalette()
-end = time.time()
-print(end-start)
