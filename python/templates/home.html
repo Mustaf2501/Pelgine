@@ -13,39 +13,10 @@
   <!-- Navbar content -->
       <a class="navbar-brand" href="#">Pelgine</a>
 </nav>
-    <div class="sticky" style="background-color: #ffffff">I will stick to the screen when you reach my scroll position
 
 
 
-<section>
-
-    <a href="#" class="button" id="basic">Click me!</a>
-</section>
-
-    </div>
-
-<h1>
-    Pelgine
-</h1>
-{% block content%}
-
-<h1>
-   Bruh
-</h1>
-
-
-
-
-{% endblock %}
-<p>
-    ...
-</p>
-
-
-
-
-
-
+ 
 
 
 
@@ -56,25 +27,7 @@
 
 
 
-<script>
 
-    /*
-        Create a new Picker instance and set the parent element.
-        By default, the color picker is a popup which appears when you click the parent.
-    */
-    var parent = document.querySelector('#basic');
-    var picker = new Picker(parent);
-
-    /*
-        You can do what you want with the chosen color using two callbacks: onChange and onDone.
-    */
-    picker.onChange = function(color) {
-        parent.style.background = color.rgbaString;
-    };
-
-    /* onDone is similar to onChange, but only called when you click 'Ok' */
-
-</script>
 
 </body>
 

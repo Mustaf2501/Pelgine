@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("frontpage.html")
+    return render_template("home.html")
 
 
 
@@ -20,7 +20,7 @@ def home():
 def searchpalette(palette):
 
     t0 = time.time()
-    p = ["#465A67", "#DED3BB", "#DED3BB", "#E47F65", "#E47F65"]
+    p = ["#432B36", "#432B36", "#432B36", "#999493", "#CDC2BC"]
     ##extendpal(p,5)
     search = hex2Lab( p )
 
@@ -51,7 +51,7 @@ def searchpalette(palette):
 
 
 
-    return render_template("extendtest.html")
+    return render_template("search.html")
 
 
 if __name__ == "__main__":
