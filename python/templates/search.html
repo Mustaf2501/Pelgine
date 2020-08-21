@@ -1,12 +1,13 @@
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
     <title>
         Pelgine
     </title>
 </head>
-
+ <!-- Place your kit's code here -->
+    <script src="https://kit.fontawesome.com/cc54faf88e.js" crossorigin="anonymous"></script>
 
 <body style="background-color:#f0f2f2">
 <nav class="navbar navbar-dark" style="background-color: #031829">
@@ -16,13 +17,11 @@
 
 
     <div class="sticky" style="background-color: #ffffff">I will stick to the screen when you reach my scroll position
+<i class="fas fa-plus-circle fa-2x"  id="searchbutton""></i>
 
 
+</i>
 
-<section>
-
-    <a href="#" class="button" id="basic">Click me!</a>
-</section>
 
     </div>
 
@@ -37,25 +36,6 @@
 
 
 
-<script>
-
-    /*
-        Create a new Picker instance and set the parent element.
-        By default, the color picker is a popup which appears when you click the parent.
-    */
-    var parent = document.querySelector('#basic');
-    var picker = new Picker(parent);
-
-    /*
-        You can do what you want with the chosen color using two callbacks: onChange and onDone.
-    */
-    picker.onChange = function(color) {
-        parent.style.background = color.rgbaString;
-    };
-
-    /* onDone is similar to onChange, but only called when you click 'Ok' */
-
-</script>
 
 </body>
 
