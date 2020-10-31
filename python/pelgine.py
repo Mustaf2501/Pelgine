@@ -9,6 +9,8 @@ import time
 
 app = Flask(__name__)
 
+xj = 9
+
 
 @app.route("/")
 def home():
@@ -18,6 +20,7 @@ def home():
 
 @app.route("/search/<palette>")
 def searchpalette(palette):
+
 
     t0 = time.time()
     p = ["#E67A3E","#E5C683","#DA4032"]
@@ -55,4 +58,5 @@ def searchpalette(palette):
 
 
 if __name__ == "__main__":
+    x = 9
     app.run(debug=True)

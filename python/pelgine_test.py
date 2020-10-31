@@ -10,11 +10,11 @@ import time
 def searchpalette():
 
     t0 = time.time()
-    p = ["#432B36", "#432B36", "#432B36", "#999493", "#CDC2BC"]
+    p = ["#DB6129","#DB6129","#32958F","#32958F","#32958F"]
 
     search = hex2Lab(p)
 
-    t = TopKMaxHeap(50)
+    t = TopKMaxHeap(10)
     conn = sqlite3.connect("pelgine.db")
     c = conn.cursor()
     c.execute("SELECT * FROM image")
