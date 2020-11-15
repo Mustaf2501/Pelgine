@@ -53,6 +53,7 @@ c.execute("SELECT * FROM image")
 
 
 for x in c:
+
     lab1 = [float(y) for y in x[10].split(",")]
     lab2 = [float(y) for y in x[11].split(",")]
     lab3 = [float(y) for y in x[12].split(",")]
@@ -72,7 +73,7 @@ for x in c:
 
 tree=scipy.spatial.cKDTree(pals)
 t0 = time.time()
-res = tree.query( hex2Lab(["#DB6129","#DB6129","#32958F","#32958F","#32958F"]) ,k = 500, p=2)
+res = tree.query( hex2Lab(["#598B48","#598B48","#598B48","#598B48","#598B48"]) ,k = 5000, p=2)
 t1 = time.time()
 d = {}
 print(t1-t0)
@@ -83,8 +84,8 @@ for id in res[1]:
          d[index] = 1
 #raw = pickle.dumps(tree)
 
-#with open('my_file.pickle', 'wb') as f:
+#with open('kdtest1.pickle', 'wb') as f:
     #pickle.dump(tree, f)
 
-#with open('my_file.pickle', 'rb') as f:
-    #tree = pickle.load(f)
+#with open('kdtest1.pickle', 'rb') as f:
+    #tree2 = pickle.load(f)

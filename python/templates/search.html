@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/cc54faf88e.js" crossorigin="anonymous"></script>
 
 <body style="background-color:#f0f2f2">
+
 <nav class="navbar navbar-dark" style="background-color: #031829">
   <!-- Navbar content -->
       <a class="navbar-brand" href="#">Pelgine</a>
@@ -19,14 +20,21 @@
 
 
     <div class="sticky" style="background-color: #ffffff">
-<div id="picker"></div>
-<i class="fas fa-plus-circle fa-2x"  id="searchbutton"></i>
-</i>
 
+
+        {% for color in clist %}
+      <div   class="color" > hello </div>
+        {% endfor %}
+
+ <div class="ColorPicker" id="boxPicker">
+
+        </div>
 
 
 
     </div>
+
+
 
 
 <script src="https://unpkg.com/vanilla-picker@2"></script>
@@ -34,16 +42,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+
+
 <script>
-var colorPicker = new iro.ColorPicker("#picker", {
-  // Set the size of the color picker
-  width: 150,
-  // Set the initial color to pure red
-   colors: [
-    '#efffff',
-    '#111111',
-    '#adaa22', 
-  ],
+  // Box & hue slider
+var boxPicker = new iro.ColorPicker("#boxPicker", {
+  width: 250,
+  color: "rgb(255, 0, 0)",
+  borderWidth: 1,
+  borderColor: "#fff",
   layout: [
     {
       component: iro.ui.Box,
@@ -51,14 +59,12 @@ var colorPicker = new iro.ColorPicker("#picker", {
     {
       component: iro.ui.Slider,
       options: {
-        // can also be 'saturation', 'value', 'red', 'green', 'blue', 'alpha' or 'kelvin'
         sliderType: 'hue'
       }
-    },
+    }
   ]
 });
 </script>
-
 
 </body>
 

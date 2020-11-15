@@ -10,7 +10,7 @@ import time
 def searchpalette():
 
     t0 = time.time()
-    p = ["#DB6129","#DB6129","#32958F","#32958F","#32958F"]
+    p = ["#22B5DE","#22B5DE","#22B5DE","#DE2D19","#DE2D19"]
 
     search = hex2Lab(p)
 

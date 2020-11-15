@@ -7,12 +7,37 @@ div.sticky {
   font-size: 20px;
 }
 
-#searchbutton {
-     position: absolute;
-  left: 1400px;
-  top:  35px;
+.ColorPicker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
 
 }
 
+.color {
+    justify-content: center;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: .5em 1em;
+    min-height: 2em;
+    border: none;
+    outline: none;
+    overflow: visible;
 
- }
+    background-color: dodgerblue;
+    color: white;
+
+    font-family: sans-serif;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        //background-image: linear-gradient(white, transparent);
+    }
+    &:focus {
+        outline: .3em dashed orange;
+    }
+}

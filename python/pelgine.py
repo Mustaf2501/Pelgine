@@ -18,10 +18,10 @@ def home():
 
 
 
-@app.route("/search/<palette>")
-def searchpalette(palette):
-
-
+@app.route("/search/<c1>-<c2>-<c3>-<c4>-<c5>")
+def searchpalette(c1,c2,c3,c4,c5):
+    print(c1,c2,c3,c4,c5)
+    pal = [1,2,3,4]
     t0 = time.time()
     p = ["#E67A3E","#E5C683","#DA4032"]
     extendpal(p,5)
@@ -54,9 +54,10 @@ def searchpalette(palette):
 
 
 
-    return render_template("search.html")
+    return render_template("search.html",pal=[],artworks=[],clist=[c1,c2,c3,c4,c5])
 
 
 if __name__ == "__main__":
-    x = 9
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     app.run(debug=True)
