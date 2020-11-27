@@ -20,7 +20,7 @@ def home():
 
 @app.route("/search/<c1>-<c2>-<c3>-<c4>-<c5>")
 def searchpalette(c1,c2,c3,c4,c5):
-    print(c1,c2,c3,c4,c5)
+   # print(c1,c2,c3,c4,c5)
     pal = [1,2,3,4]
     t0 = time.time()
     p = ["#E67A3E","#E5C683","#DA4032"]
@@ -54,7 +54,7 @@ def searchpalette(c1,c2,c3,c4,c5):
 
 
 
-    return render_template("search.html",pal=[],artworks=[],clist=[c1,c2,c3,c4,c5])
+    return render_template("search.html",pal=[],artworks=[],clist=["#45202E","#255865","#125F75","#47838B","#E0A841"])
 
 
 if __name__ == "__main__":

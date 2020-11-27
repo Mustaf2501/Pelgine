@@ -7,37 +7,21 @@ div.sticky {
   font-size: 20px;
 }
 
-.ColorPicker {
+.flex-parent {
   display: flex;
-  flex-direction: column;
+}
+
+.jc-center {
   justify-content: center;
-  align-items: center;
+}
 
+button.margin-right {
+  margin-right: 20px;
+}
+
+button{
+ height:70px;
+  width:150px;
 
 }
 
-.color {
-    justify-content: center;
-    position: relative;
-    display: inline-block;
-    box-sizing: border-box;
-    padding: .5em 1em;
-    min-height: 2em;
-    border: none;
-    outline: none;
-    overflow: visible;
-
-    background-color: dodgerblue;
-    color: white;
-
-    font-family: sans-serif;
-    text-align: center;
-    cursor: pointer;
-
-    &:hover {
-        //background-image: linear-gradient(white, transparent);
-    }
-    &:focus {
-        outline: .3em dashed orange;
-    }
-}
