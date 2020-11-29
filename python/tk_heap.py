@@ -1,5 +1,5 @@
 from heapq import *
-from python.palette_metric import metric, lowerbound, hex2Lab
+from palette_metric import metric, lowerbound, hex2Lab
 from PIL import Image
 import numpy
 import time

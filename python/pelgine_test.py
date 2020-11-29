@@ -1,7 +1,7 @@
 
 import sqlite3
-from python.palette_metric import   hex2Lab,extendpal
-from python.tk_heap import TopKMaxHeap
+from palette_metric import   hex2Lab,extendpal
+from tk_heap import TopKMaxHeap
 import numpy as np
 from heapq import *
 import time

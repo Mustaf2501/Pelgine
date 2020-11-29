@@ -7,7 +7,7 @@ from math import sqrt
 import numpy
 
 
-from python.tk_heap import TopKMaxHeap
+from tk_heap import TopKMaxHeap
 from heapq import *
 import time
 from sklearn.neighbors import NearestNeighbors
