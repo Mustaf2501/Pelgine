@@ -3,12 +3,13 @@ div.sticky {
   position: sticky;
   top: 0;
   background-color: yellow;
-  padding: 50px;
+  padding: 10px;
   font-size: 20px;
 }
 
 .flex-parent {
   display: flex;
+  padding: 10px;
 }
 
 .jc-center {
@@ -19,9 +20,33 @@ button.margin-right {
   margin-right: 20px;
 }
 
-button{
- height:70px;
+.color{
+ height:50px;
+  width:150px;
+  border-color: #ffffff;
+}
+.searchresult{
+ height:150px;
   width:150px;
 
 }
+
+.del{
+ height:50px;
+  width:50px;
+  border-radius: 50%;
+}
+
+.add{
+ height:50px;
+  width:50px;
+  border-radius: 50%;
+}
+
+.search{
+ height:50px;
+  width:200px;
+
+}
+
 

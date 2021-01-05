@@ -24,24 +24,41 @@
 
     <div class="sticky" style="background-color: #ffffff">
 
-        <div class="flex-parent jc-center">
+        <div class="flex-parent jc-center" id="parentc">
 
 
-        {% for color in clist %}
-      <button   class="color" style="background-color:{{color}}" onclick="changepicker()" > </button>
+        {% for i in range(numcolors) %}
+
+      <button   class="color"  id = "{{i}}" style="background-color:{{palette[i]}}"   onclick="ChangePicker({{i}})"> </button >
+
         {% endfor %}
 
+      <button   class="del"  style="background-color:#f0f2f2"    onclick="delColor()" > - </button >
+      <button   class="add"   style="background-color:#f0f2f2"   onclick="addColor()" > + </button >
         </div>
+
      <div class="flex-parent jc-center">
 
 
           <div class="ColorPicker" id="boxPicker">
     </div>
+
         </div>
+
+         <div class="flex-parent jc-center">
+        <button   class="search"  style="background-color:#f0f2f2"  onclick="searchpalette()"   > search </button >
+             </div>
+
 
     </div>
 
 
+{% for artwork in artworks %}
+
+       <img src="{{artwork[1]}}" style="height:80%;"/>
+
+
+{% endfor %}
 
 
 <script src="https://unpkg.com/vanilla-picker@2"></script>
@@ -50,14 +67,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-
 <script>
 
 
     // Box & hue slider
 var boxPicker = new iro.ColorPicker("#boxPicker", {
   width: 150,
-  color: "{{clist[0]}}",
+  color: "{{palette[0]}}",
   borderWidth: 1,
   borderColor: "#fff",
   layout: [
@@ -73,10 +89,86 @@ var boxPicker = new iro.ColorPicker("#boxPicker", {
   ]
 });
 
-function changepicker() {
+boxPicker.id = 0;
+var colorID = 6;
 
+function ChangePicker(id) {
+      var color = (document.getElementById(id).style.backgroundColor);
+      boxPicker.setColors([color]);
+      boxPicker.setActiveColor(0);
+      boxPicker.id = id;
+};
+
+boxPicker.on('color:change', function(color) {
+  // log the current color as a HEX string
+  //console.log(color.hex);
+  colorbox = document.getElementById(boxPicker.id);
+  colorbox.attributes['style'].textContent='background-color:' + color.hexString;
+
+});
+
+function delColor(){
+var colorsleft = document.querySelectorAll('.color').length -1;
+
+if (colorsleft > 0){
+
+document.getElementById(boxPicker.id).remove();
+var newcolor = document.getElementsByClassName('color')[0];
+
+boxPicker.id = newcolor.id;
+
+boxPicker.setColors([newcolor.style.backgroundColor]);
+boxPicker.setActiveColor(0);
+boxPicker.id = newcolor.id;
+}
+
+};
+
+
+
+function addColor(){
+var colorsleft = document.querySelectorAll('.color').length +1;
+if (colorsleft < 6){
+var itm = document.getElementsByClassName('color')[0];
+
+var cln = itm.cloneNode(true);
+
+cln.id =  colorID;
+colorID = colorID+1;
+cln.attributes['style'].textContent='background-color:#f0f2f2';
+cln.setAttribute( "onClick", "ChangePicker(" + cln.id + ");" );
+
+var del =  document.getElementsByClassName('del')[0];
+var parentc = document.getElementsByClassName('flex-parent jc-center')[0];
+parentc.insertBefore(cln,del);
 
 }
+
+};
+
+
+function searchpalette(){
+
+var colors  = document.querySelectorAll('.color');
+var numcolors = colors.length;
+var searchstring = "";
+
+for (i = 0; i < numcolors; i++) {
+  var hexstr = colors[i].attributes['style'].textContent;
+  searchstring = searchstring + hexstr.slice(hexstr.length - 6) + '-';
+  console.log(searchstring);
+}
+
+for(i =0; i<(5-numcolors); i++){
+    searchstring = searchstring + 'none' + '-';
+
+}
+searchstring = searchstring.slice(0,-1);
+//console.log(searchstring);
+location.href=searchstring;
+
+
+};
 
 </script>
 

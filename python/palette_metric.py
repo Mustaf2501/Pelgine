@@ -31,9 +31,11 @@ def hex2Lab(pal):
     for i in range(0, n):
         color_rgb = sRGBColor(pal[i][0], pal[i][1], pal[i][2])
         color_lab = convert_color(color_rgb, LabColor)
-        lab.append( [color_lab.lab_l,color_lab.lab_a,color_lab.lab_b])
+        lab.append( [color_lab.lab_l, color_lab.lab_a, color_lab.lab_b])
 
-    return numpy.array(lab)
+    v = [const for sublist in lab for const in sublist]
+    return numpy.array(v)
+
 
 def extendpal(pal, m ):
 
@@ -53,6 +55,8 @@ def extendpal(pal, m ):
 
     for i in range(0,m-n):
         pal.append(random.choice(pal)) # appends random Lab color to palette
+
+    return pal
 
 
 def lowerbound(pal1,pal2):

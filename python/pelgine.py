@@ -5,11 +5,15 @@ from python.tk_heap import TopKMaxHeap
 import numpy as np
 from heapq import *
 import time
+import pickle
+from math import ceil
 
 
+# load pixeljoint's kdtree
+f = open('pixeljoint.pickle', 'rb')
+tree = pickle.load(f)
 app = Flask(__name__)
 
-xj = 9
 
 
 @app.route("/")
@@ -20,41 +24,43 @@ def home():
 
 @app.route("/search/<c1>-<c2>-<c3>-<c4>-<c5>")
 def searchpalette(c1,c2,c3,c4,c5):
-   # print(c1,c2,c3,c4,c5)
-    pal = [1,2,3,4]
-    t0 = time.time()
-    p = ["#E67A3E","#E5C683","#DA4032"]
-    extendpal(p,5)
-    search = hex2Lab( p )
 
-    t = TopKMaxHeap(20)
+    # connect to Pelgine db
     conn = sqlite3.connect("pelgine.db")
-    c = conn.cursor()
-    c.execute("SELECT * FROM image")
+    cursor = conn.cursor()
 
-    for x in c:
-        lab1 = [float(y) for y in x[10].split(",")]
-        lab2 = [float(y) for y in x[11].split(",")]
-        lab3 = [float(y) for y in x[12].split(",")]
-        lab4 = [float(y) for y in x[13].split(",")]
-        lab5 = [float(y) for y in x[14].split(",")]
+    # Example Search :  http://127.0.0.1:5000/search/9D1D23-ff5e00-ffd914-6d2222-d94c0f
+    pal = [c1,c2,c3,c4,c5]
+    pal = ["#"+color for color in pal if color != 'none']
+    
+    epal = extendpal(pal.copy(), 5)
 
-        pal = np.array([lab1,lab2,lab3,lab4,lab5])
 
-        t.push(x[9], pal, search)
 
-    best_art = nlargest(t.k, t.maxheap)
-    print(best_art)
+
+
+    # search k-d tree and put results in artworks
+
+    idurl = []
+    search = hex2Lab(epal)
+    print(search )
+    results = tree.query(search, k=500, p=2)
+
+    artworkids= {}
+
+    for index in results[1]:
+        id  = int(ceil(((index + 1) / 120)))
+        if id not in artworkids:
+            artworkids[id] = 1
+
+            sql = "select imgUrl from pixeljoint where rowid = {} ".format(id)
+            cursor.execute(sql)
+            idurl.append([id, cursor.fetchone()[0]])
 
     conn.close()
 
 
-    t1 = time.time()
-    print(t1-t0)
-
-
-
-    return render_template("search.html",pal=[],artworks=[],clist=["#45202E","#255865","#125F75","#47838B","#E0A841"])
+    return render_template("search.html", pal=[], artworks= idurl, palette= pal, numcolors=len(pal))
 
 
 if __name__ == "__main__":

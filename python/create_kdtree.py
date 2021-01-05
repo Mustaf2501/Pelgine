@@ -39,53 +39,69 @@ def hex2Lab(pal):
     for i in range(0, n):
         color_rgb = sRGBColor(pal[i][0], pal[i][1], pal[i][2])
         color_lab = convert_color(color_rgb, LabColor)
-        lab.append( [color_lab.lab_l,color_lab.lab_a,color_lab.lab_b])
+        lab.append( [color_lab.lab_l, color_lab.lab_a, color_lab.lab_b])
 
     v = [const for sublist in lab for const in sublist]
     return numpy.array(v)
 
 urls = []
-pals = []
+#pals = []
 
 conn = sqlite3.connect("pelgine.db")
 c = conn.cursor()
-c.execute("SELECT * FROM image")
+c.execute("SELECT * FROM pixeljoint")
 
 
 for x in c:
-
-    lab1 = [float(y) for y in x[10].split(",")]
-    lab2 = [float(y) for y in x[11].split(",")]
-    lab3 = [float(y) for y in x[12].split(",")]
-    lab4 = [float(y) for y in x[13].split(",")]
-    lab5 = [float(y) for y in x[14].split(",")]
-    pal = [lab1,lab2,lab3,lab4,lab5]
+    #hex1 = x[10]
+    #hex2 =  x[11]
+    #hex3 =  x[12]
+    #hex4 =  x[13]
+    #hex5 =  x[14]
+    #pal = [hex1,hex2,hex3,hex4,hex5]
     urls.append(x[9])
 
-    itr = list(itertools.permutations(pal))
+    #itr = list(itertools.permutations(pal))
 
-    for p in itr:
-        v = [const for sublist in p for const in sublist]
-        pals.append(v)
-
+    #for p in itr:
+        #pals.append(hex2Lab(list(p)))
 
 
+conn.close()
 
-tree=scipy.spatial.cKDTree(pals)
-t0 = time.time()
-res = tree.query( hex2Lab(["#598B48","#598B48","#598B48","#598B48","#598B48"]) ,k = 5000, p=2)
-t1 = time.time()
-d = {}
-print(t1-t0)
-for id in res[1]:
-    index = int(ceil(((id + 1)/120))) -1
-    if index not in d:
-         print(urls[index])
-         d[index] = 1
+
+
+#tree=scipy.spatial.cKDTree(pals)
+#t0 = time.time()
+#res = tree.query( hex2Lab(["#3891A6","#3891A6","#3891A6","#FDE74C","#FDE74C"]), k = 500, p=2)
+#t1 = time.time()
+#d = {}
+#print(t1-t0)
+#for id in res[1]:
+    #index = int(ceil(((id + 1)/120))) - 1
+    #if index not in d:
+         #print(urls[index])
+         #d[index] = 1
+
+
 #raw = pickle.dumps(tree)
 
-#with open('kdtest1.pickle', 'wb') as f:
+#with open('pixeljoint.pickle', 'wb') as f:
     #pickle.dump(tree, f)
 
-#with open('kdtest1.pickle', 'rb') as f:
-    #tree2 = pickle.load(f)
+#http://pixeljoint.com/files/icons/full/che__r1425186081.gif
+with open('pixeljoint.pickle', 'rb') as f:
+    tree = pickle.load(f)
+    #print(tree.leaf_size)
+    t0 = time.time()
+    res = tree.query(hex2Lab(["#361948","#c88ab2","#5e316f","#e7a250","#8757b1"]), k=500, p=2)
+    t1 = time.time()
+    d = {}
+    print(t1 - t0)
+    i = 0
+    for id in res[1]:
+        index = int(ceil(((id + 1) / 120))) - 1
+        if index not in d:
+            print(urls[index], res[0][i])
+            d[index] = 1
+        i = i + 1

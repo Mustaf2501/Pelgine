@@ -1,6 +1,6 @@
 
 import sqlite3
-from python.palette_metric import   hex2Lab,extendpal
+from python.palette_metric import   hex2Lab , extendpal
 from python.tk_heap import TopKMaxHeap
 import numpy as np
 from heapq import *
@@ -10,9 +10,9 @@ import time
 def searchpalette():
 
     t0 = time.time()
-    p = ["#22B5DE","#22B5DE","#22B5DE","#DE2D19","#DE2D19"]
+    p = ["#fa2b57","#f07bf4","#16e6df"]
 
-    search = hex2Lab(p)
+    search = hex2Lab( extendpal(p,5) )
 
     t = TopKMaxHeap(10)
     conn = sqlite3.connect("pelgine.db")
