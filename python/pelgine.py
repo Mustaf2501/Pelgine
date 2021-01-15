@@ -20,30 +20,40 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
+@app.route("/details/pixelart/<id>")
+def detailspj(id):
+
+    # connect to Pelgine db
+    conn = sqlite3.connect("pelgine.db")
+    cursor = conn.cursor()
+    sql = "select * from pixeljoint where rowid = {} ".format(id)
+    cursor.execute(sql)
+    details = list(cursor.fetchone())
+    conn.close()
 
 
-@app.route("/search/<c1>-<c2>-<c3>-<c4>-<c5>")
+
+    return  render_template("details.html", artwork= details )
+
+
+@app.route("/search/pixelart/<c1>-<c2>-<c3>-<c4>-<c5>")
 def searchpalette(c1,c2,c3,c4,c5):
 
     # connect to Pelgine db
     conn = sqlite3.connect("pelgine.db")
     cursor = conn.cursor()
 
-    # Example Search :  http://127.0.0.1:5000/search/9D1D23-ff5e00-ffd914-6d2222-d94c0f
+    # Example Search :  http://127.0.0.1:5000/search/pixelart/9D1D23-ff5e00-ffd914-6d2222-d94c0f
     pal = [c1,c2,c3,c4,c5]
     pal = ["#"+color for color in pal if color != 'none']
     
     epal = extendpal(pal.copy(), 5)
 
-
-
-
-
     # search k-d tree and put results in artworks
 
     idurl = []
     search = hex2Lab(epal)
-    print(search )
+
     results = tree.query(search, k=500, p=2)
 
     artworkids= {}
@@ -52,14 +62,13 @@ def searchpalette(c1,c2,c3,c4,c5):
         id  = int(ceil(((index + 1) / 120)))
         if id not in artworkids:
             artworkids[id] = 1
-
             sql = "select imgUrl from pixeljoint where rowid = {} ".format(id)
             cursor.execute(sql)
             idurl.append([id, cursor.fetchone()[0]])
 
     conn.close()
 
-
+    ###
     return render_template("search.html", pal=[], artworks= idurl, palette= pal, numcolors=len(pal))
 
 
