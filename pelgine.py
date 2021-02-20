@@ -1,10 +1,6 @@
 from flask import Flask ,render_template
 import sqlite3
-from python.palette_metric import   hex2Lab,extendpal
-from python.tk_heap import TopKMaxHeap
-import numpy as np
-from heapq import *
-import time
+from palette_metric import hex2Lab,extendpal
 import pickle
 from math import ceil
 

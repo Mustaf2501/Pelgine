@@ -3,6 +3,12 @@
   display: flex;
   padding: 10px;
 }
+#displaypad{
+padding: 10px;
+
+}
+
+
 
 .jc-center {
   justify-content: center;

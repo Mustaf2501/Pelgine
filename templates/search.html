@@ -18,7 +18,7 @@
 
 <nav class="navbar navbar-dark" style="background-color: #031829">
   <!-- Navbar content -->
-      <a class="navbar-brand" href="#">Pelgine</a>
+      <a class="navbar-brand" href="/">Pelgine</a>
 </nav>
 
 
@@ -78,6 +78,9 @@
 <script>
 
 
+var delbutton = document.getElementsByClassName("del")[0];
+delbutton.style.borderColor = '{{palette[0]}}';
+
     // Box & hue slider
 var boxPicker = new iro.ColorPicker("#boxPicker", {
   width: 150,
@@ -100,11 +103,15 @@ var boxPicker = new iro.ColorPicker("#boxPicker", {
 boxPicker.id = 0;
 var colorID = 6;
 
+
+
 function ChangePicker(id) {
       var color = (document.getElementById(id).style.backgroundColor);
       boxPicker.setColors([color]);
       boxPicker.setActiveColor(0);
       boxPicker.id = id;
+      var delbutton = document.getElementsByClassName("del")[0];
+      delbutton.style.borderColor = color;
 };
 
 boxPicker.on('color:change', function(color) {
@@ -112,6 +119,9 @@ boxPicker.on('color:change', function(color) {
   //console.log(color.hex);
   colorbox = document.getElementById(boxPicker.id);
   colorbox.attributes['style'].textContent='background-color:' + color.hexString;
+
+  var delbutton = document.getElementsByClassName("del")[0];
+  delbutton.style.borderColor = color.hexString;
 
 });
 
@@ -128,6 +138,10 @@ boxPicker.id = newcolor.id;
 boxPicker.setColors([newcolor.style.backgroundColor]);
 boxPicker.setActiveColor(0);
 boxPicker.id = newcolor.id;
+
+
+var delbutton = document.getElementsByClassName("del")[0];
+delbutton.style.borderColor = newcolor.style.backgroundColor;
 }
 
 };

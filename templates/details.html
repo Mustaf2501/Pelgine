@@ -3,6 +3,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
 
 
 
@@ -17,7 +18,7 @@
 
 <nav class="navbar navbar-dark" style="background-color: #031829">
   <!-- Navbar content -->
-      <a class="navbar-brand" href="#">Pelgine</a>
+      <a class="navbar-brand" href="/">Pelgine</a>
 </nav>
 
 
@@ -25,7 +26,7 @@
 
 
 
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center" id="displaypad">
 
 
         <div class="col-md-auto">
