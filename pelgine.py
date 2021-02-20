@@ -99,6 +99,7 @@ def searchpalette(c1,c2,c3,c4,c5):
 
 
 if __name__ == "__main__":
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    app.run(debug=True)
+    #app.config['TEMPLATES_AUTO_RELOAD'] = True
+    #app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    #app.run(debug=True)
+    app.run()
