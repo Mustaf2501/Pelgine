@@ -1,10 +1,10 @@
 
 .flex-parent {
   display: flex;
-  padding: 10px;
+  padding: 5px;
 }
 #displaypad{
-padding: 10px;
+padding: 5px;
 
 }
 
@@ -14,11 +14,38 @@ padding: 10px;
   justify-content: center;
 }
 
+.pcr-button{
+  height:100px;
+  width:150px;
+}
+
+
+
 button.margin-right {
   margin-right: 20px;
 }
 
-.color{
+.color1{
+ height:50px;
+  width:150px;
+  border-color: #ffffff;
+}
+.color2{
+ height:50px;
+  width:150px;
+  border-color: #ffffff;
+}
+.color3{
+ height:50px;
+  width:150px;
+  border-color: #ffffff;
+}
+.color4{
+ height:50px;
+  width:150px;
+  border-color: #ffffff;
+}
+.color5{
  height:50px;
   width:150px;
   border-color: #ffffff;
@@ -29,11 +56,6 @@ button.margin-right {
 
 }
 
-.del{
- height:50px;
-  width:50px;
-  border-radius: 50%;
-}
 
 .add{
  height:50px;
@@ -44,7 +66,6 @@ button.margin-right {
 .search{
  height:50px;
   width:200px;
-
 }
 
 img {
@@ -52,3 +73,11 @@ img {
     max-height: 500px;
 }
 
+ div.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: yellow;
+  padding: 50px;
+  font-size: 20px;
+}

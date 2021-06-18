@@ -32,7 +32,7 @@
         {% for i in range(numcolors) %}
 
                    <div class="flex-parent jc-center" id="parentc">
-      <button   class="color"  id = "{{i + 1}}" style="background-color:{{palette[i]}}" > </button >
+      <button   class="color{{i+1}}"  id = "{{i + 1}}" style="background-color:{{palette[i]}}" > </button >
        <button   class="del"  id = "{{i + 1 }}"  onclick="delColor(this, {{i+1}});"> X </button >
                    </div>
 
@@ -133,29 +133,128 @@
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 <script >
-nextid = {{numcolors}} + 1;
-
+colorsleft = {{numcolors}};
+var deletedcolors = [];
 
     // Simple example, see optional options for more configuration.
-const pickr = Pickr.create({
-    el: '.color',
+const pickr1 = Pickr.create({
+    el: '.color1',
     theme: 'nano', // or 'monolith', or 'nano'
   // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
     // If true, appendToBody will also be automatically true.
     useAsButton: true,
-
     swatches: [
-
     ],
-
     components: {
-
         // Main components
         preview: true,
         opacity: false,
         hue: true,
-        
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+});
 
+const pickr2 = Pickr.create({
+    el: '.color2',
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+});
+const pickr3 = Pickr.create({
+    el: '.color3',
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+});
+const pickr4 = Pickr.create({
+    el: '.color4',
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+});
+const pickr5 = Pickr.create({
+    el: '.color5',
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
         // Input / output Options
         interaction: {
             hex: true,
@@ -175,7 +274,6 @@ const pickr = Pickr.create({
 
 
 function delColor(el, id){
-var colorsleft = document.querySelectorAll('.color').length ;
 
 if (colorsleft > 1){
 var element = el; // remove calling delete button
@@ -186,40 +284,45 @@ var parent = colorbtn.parentNode;
 colorbtn.remove();
 parent.remove();
 
+colorsleft = colorsleft - 1;
+deletedcolors.push(id);
+
 }
 
 };
 
 function addColor(){
 
-var colorsleft = document.querySelectorAll('.color').length;
-
-
 if (colorsleft < 5){
 
 //var test = document.querySelectorAll('[id=parentc]');
 //console.log(test);
 
+var newid = deletedcolors.pop();
+
+
 var container = document.getElementById("container");
 var coloranddel = document.getElementById("parentc");
 
 var newcoloranddel =  coloranddel.cloneNode(true);
-var colorbtn = newcoloranddel.getElementsByClassName("color")[0];
-var delbtn = newcoloranddel.getElementsByClassName("del")[0];
+var colorbtn = newcoloranddel.children[0];
+var delbtn = newcoloranddel.children[1];
 
-//console.log(newcoloranddel);
-//console.log(colorbtn);
-//console.log(delbtn);
+console.log(newcoloranddel);
+console.log(colorbtn);
+console.log(delbtn);
 
-colorbtn.setAttribute("id", nextid);
+colorbtn.className = "color"+ newid;
+colorbtn.setAttribute("id", newid);
 colorbtn.attributes['style'].textContent='background-color:#f0f2f2';
-delbtn.setAttribute("id", nextid);
-delbtn.setAttribute( "onClick", "delColor(this, " + nextid + ");" );
+delbtn.setAttribute("id", newid);
+delbtn.setAttribute( "onClick", "delColor(this, " + newid+ ");" );
 
 var addbtn =  document.getElementsByClassName('add')[0];
 container.insertBefore(newcoloranddel, addbtn);
 
-nextid = nextid + 1;
+colorsleft = colorsleft + 1;
+
 
 }
 
