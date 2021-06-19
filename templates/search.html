@@ -133,43 +133,36 @@
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 <script >
+
+function changebtncolor(i, color){
+
+var strcolor = color.toHEXA().toString();
+var colorbtn =  document.getElementsByClassName('color'+(i))[0];
+colorbtn.style.backgroundColor = strcolor;
+
+
+};
+
+
+const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
+
+
 colorsleft = {{numcolors}};
 var deletedcolors = [];
 
-    // Simple example, see optional options for more configuration.
-const pickr1 = Pickr.create({
-    el: '.color1',
-    theme: 'nano', // or 'monolith', or 'nano'
-  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
-    // If true, appendToBody will also be automatically true.
-    useAsButton: true,
-    swatches: [
-    ],
-    components: {
-        // Main components
-        preview: true,
-        opacity: false,
-        hue: true,
-        // Input / output Options
-        interaction: {
-            hex: true,
-            rgba: false,
-            hsla: false,
-            hsva: false,
-            cmyk: false,
-            input: true,
-            clear: false,
-            save: false
-        }
-    }
-});
+for (let i =0; i < colorsleft; i++){
+  // Simple example, see optional options for more configuration.
 
-const pickr2 = Pickr.create({
-    el: '.color2',
+var colorbtn =  document.getElementsByClassName('color'+(i+1))[0];
+var color = rgb2hex(colorbtn.style.backgroundColor);
+
+Pickr.create({
+    el: '.color' + (i+1),
     theme: 'nano', // or 'monolith', or 'nano'
   // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
     // If true, appendToBody will also be automatically true.
     useAsButton: true,
+    default: color,
     swatches: [
     ],
     components: {
@@ -189,85 +182,14 @@ const pickr2 = Pickr.create({
             save: false
         }
     }
-});
-const pickr3 = Pickr.create({
-    el: '.color3',
-    theme: 'nano', // or 'monolith', or 'nano'
-  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
-    // If true, appendToBody will also be automatically true.
-    useAsButton: true,
-    swatches: [
-    ],
-    components: {
-        // Main components
-        preview: true,
-        opacity: false,
-        hue: true,
-        // Input / output Options
-        interaction: {
-            hex: true,
-            rgba: false,
-            hsla: false,
-            hsva: false,
-            cmyk: false,
-            input: true,
-            clear: false,
-            save: false
-        }
-    }
-});
-const pickr4 = Pickr.create({
-    el: '.color4',
-    theme: 'nano', // or 'monolith', or 'nano'
-  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
-    // If true, appendToBody will also be automatically true.
-    useAsButton: true,
-    swatches: [
-    ],
-    components: {
-        // Main components
-        preview: true,
-        opacity: false,
-        hue: true,
-        // Input / output Options
-        interaction: {
-            hex: true,
-            rgba: false,
-            hsla: false,
-            hsva: false,
-            cmyk: false,
-            input: true,
-            clear: false,
-            save: false
-        }
-    }
-});
-const pickr5 = Pickr.create({
-    el: '.color5',
-    theme: 'nano', // or 'monolith', or 'nano'
-  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
-    // If true, appendToBody will also be automatically true.
-    useAsButton: true,
-    swatches: [
-    ],
-    components: {
-        // Main components
-        preview: true,
-        opacity: false,
-        hue: true,
-        // Input / output Options
-        interaction: {
-            hex: true,
-            rgba: false,
-            hsla: false,
-            hsva: false,
-            cmyk: false,
-            input: true,
-            clear: false,
-            save: false
-        }
-    }
-});
+}).on('change', (color, source, instance) => {
+    changebtncolor(i+1, color);
+    //console.log('Event: "change"', color);
+})
+}
+
+
+
 
 
 
@@ -308,9 +230,9 @@ var newcoloranddel =  coloranddel.cloneNode(true);
 var colorbtn = newcoloranddel.children[0];
 var delbtn = newcoloranddel.children[1];
 
-console.log(newcoloranddel);
-console.log(colorbtn);
-console.log(delbtn);
+//console.log(newcoloranddel);
+//console.log(colorbtn);
+//console.log(delbtn);
 
 colorbtn.className = "color"+ newid;
 colorbtn.setAttribute("id", newid);
@@ -322,6 +244,39 @@ var addbtn =  document.getElementsByClassName('add')[0];
 container.insertBefore(newcoloranddel, addbtn);
 
 colorsleft = colorsleft + 1;
+
+// new picker for new button
+
+Pickr.create({
+    el: '.color' + (newid),
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    default: '#f0f2f2',
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+}).on('change', (color, source, instance) => {
+    changebtncolor(newid, color);
+    //console.log('Event: "change"', color);
+})
 
 
 }
