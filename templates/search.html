@@ -41,6 +41,10 @@
                 <button   class="add"  onclick="addColor();" > +</button >
                    </div>
 
+         <div class="flex-parent jc-center">
+        <button   class="search"  style="background-color:#f0f2f2"  onclick="search()"   > search </button >
+             </div>
+
         </div>
 
 
@@ -48,82 +52,23 @@
     </div>
 
 
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-<p>Some content here for scrolling purposes</p>
-
-
 <div class="container">
 
+    <div class="row justify-content-md-center">
+        {% for artwork in artworks %}
+        <a href="/details/pixelart/{{artwork[0]}}">
+        <div class="col-md-auto">
 
+            <img class="img" src="{{artwork[1]}}" title="More Details" >
+
+        </div>
+        </a>
+        {% endfor %}
+    </div>
 </div>
+
+
+
 
 
 
@@ -133,6 +78,39 @@
 <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 <script >
+
+function search (){
+
+console.log("in search palette");
+var searchstring = "";
+
+
+for(let i =1; i < 6; i++){
+var ithcolorbtn = document.getElementsByClassName('color'+(i));
+
+if (ithcolorbtn.length == 1){
+var color = rgb2hex(ithcolorbtn[0].style.backgroundColor);
+color = color.substring(1);
+searchstring = searchstring + color+ "-";
+};
+};
+
+for(let i =0; i < deletedcolors.length; i++){
+searchstring = searchstring + "none-"
+};
+
+
+searchstring = searchstring.slice(0,-1);
+
+
+console.log(searchstring);
+
+location.href= '/search/pixelart/' + searchstring;
+
+
+
+
+};
 
 function changebtncolor(i, color){
 
@@ -150,7 +128,13 @@ const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice
 colorsleft = {{numcolors}};
 var deletedcolors = [];
 
+for(let i =0; i < 5 - colorsleft; i++){
+    deletedcolors.push(5-i);
+};
+
+
 for (let i =0; i < colorsleft; i++){
+
   // Simple example, see optional options for more configuration.
 
 var colorbtn =  document.getElementsByClassName('color'+(i+1))[0];
@@ -187,12 +171,6 @@ Pickr.create({
     //console.log('Event: "change"', color);
 })
 }
-
-
-
-
-
-
 
 
 function delColor(el, id){
