@@ -1,8 +1,5 @@
 from heapq import *
-from palette_metric import metric, lowerbound, hex2Lab
-from PIL import Image
-import numpy
-import time
+from important_files.palette_metric import metric, lowerbound
 
 
 class TopKMaxHeap:
