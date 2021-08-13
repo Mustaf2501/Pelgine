@@ -1,10 +1,12 @@
 <html>
 <head>
+
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/> <!-- 'classic' theme -->
 
 
     <title>
@@ -21,33 +23,30 @@
       <a class="navbar-brand" href="/">Pelgine</a>
 </nav>
 
+    <div   class="sticky" style="background-color: #ffffff">
 
-    <div     style="background-color: #ffffff">
 
-        <div class="flex-parent jc-center" id="parentc">
+           <div class="flex-parent jc-center" id="container">
 
 
         {% for i in range(numcolors) %}
 
-      <button   class="color"  id = "{{i}}" style="background-color:{{palette[i]}}"   onclick="ChangePicker({{i}})"> </button >
+                   <div class="flex-parent jc-center" id="parentc">
+      <button   class="color{{i+1}}"  id = "{{i + 1}}" style="background-color:{{palette[i]}}" > </button >
+       <button   class="del"  id = "{{i + 1 }}"  onclick="delColor(this, {{i+1}});"> X </button >
+                   </div>
+
 
         {% endfor %}
-
-      <button   class="del"  style="background-color:#f0f2f2"    onclick="delColor()" > - </button >
-      <button   class="add"   style="background-color:#f0f2f2"   onclick="addColor()" > + </button >
-        </div>
-
-     <div class="flex-parent jc-center">
-
-
-          <div class="ColorPicker" id="boxPicker">
-    </div>
-
-        </div>
+                <button   class="add"  onclick="addColor();" > +</button >
+                   </div>
 
          <div class="flex-parent jc-center">
-        <button   class="search"  style="background-color:#f0f2f2"  onclick="searchpalette()"   > search </button >
+        <button   class="search"  style="background-color:#f0f2f2"  onclick="search()"   > search </button >
              </div>
+
+        </div>
+
 
 
     </div>
@@ -69,130 +68,196 @@
 </div>
 
 
-<script src="https://unpkg.com/vanilla-picker@2"></script>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
-<script>
+<script >
 
+function search (){
 
-var delbutton = document.getElementsByClassName("del")[0];
-delbutton.style.borderColor = '{{palette[0]}}';
-
-    // Box & hue slider
-var boxPicker = new iro.ColorPicker("#boxPicker", {
-  width: 150,
-  color: "{{palette[0]}}",
-  borderWidth: 1,
-  borderColor: "#fff",
-  layout: [
-    {
-      component: iro.ui.Box,
-    },
-    {
-      component: iro.ui.Slider,
-      options: {
-        sliderType: 'hue'
-      }
-    }
-  ]
-});
-
-boxPicker.id = 0;
-var colorID = 6;
-
-
-
-function ChangePicker(id) {
-      var color = (document.getElementById(id).style.backgroundColor);
-      boxPicker.setColors([color]);
-      boxPicker.setActiveColor(0);
-      boxPicker.id = id;
-      var delbutton = document.getElementsByClassName("del")[0];
-      delbutton.style.borderColor = color;
-};
-
-boxPicker.on('color:change', function(color) {
-  // log the current color as a HEX string
-  //console.log(color.hex);
-  colorbox = document.getElementById(boxPicker.id);
-  colorbox.attributes['style'].textContent='background-color:' + color.hexString;
-
-  var delbutton = document.getElementsByClassName("del")[0];
-  delbutton.style.borderColor = color.hexString;
-
-});
-
-function delColor(){
-var colorsleft = document.querySelectorAll('.color').length -1;
-
-if (colorsleft > 0){
-
-document.getElementById(boxPicker.id).remove();
-var newcolor = document.getElementsByClassName('color')[0];
-
-boxPicker.id = newcolor.id;
-
-boxPicker.setColors([newcolor.style.backgroundColor]);
-boxPicker.setActiveColor(0);
-boxPicker.id = newcolor.id;
-
-
-var delbutton = document.getElementsByClassName("del")[0];
-delbutton.style.borderColor = newcolor.style.backgroundColor;
-}
-
-};
-
-
-
-function addColor(){
-var colorsleft = document.querySelectorAll('.color').length +1;
-if (colorsleft < 6){
-var itm = document.getElementsByClassName('color')[0];
-
-var cln = itm.cloneNode(true);
-
-cln.id =  colorID;
-colorID = colorID+1;
-cln.attributes['style'].textContent='background-color:#f0f2f2';
-cln.setAttribute( "onClick", "ChangePicker(" + cln.id + ");" );
-
-var del =  document.getElementsByClassName('del')[0];
-var parentc = document.getElementsByClassName('flex-parent jc-center')[0];
-parentc.insertBefore(cln,del);
-
-}
-
-};
-
-
-function searchpalette(){
-
-var colors  = document.querySelectorAll('.color');
-var numcolors = colors.length;
+console.log("in search palette");
 var searchstring = "";
 
-for (i = 0; i < numcolors; i++) {
-  var hexstr = colors[i].attributes['style'].textContent;
-  searchstring = searchstring + hexstr.slice(hexstr.length - 6) + '-';
-  console.log(searchstring);
-}
 
-for(i =0; i<(5-numcolors); i++){
-    searchstring = searchstring + 'none' + '-';
+for(let i =1; i < 6; i++){
+var ithcolorbtn = document.getElementsByClassName('color'+(i));
 
-}
+if (ithcolorbtn.length == 1){
+var color = rgb2hex(ithcolorbtn[0].style.backgroundColor);
+color = color.substring(1);
+searchstring = searchstring + color+ "-";
+};
+};
+
+for(let i =0; i < deletedcolors.length; i++){
+searchstring = searchstring + "none-"
+};
+
+
 searchstring = searchstring.slice(0,-1);
-//console.log(searchstring);
+
+
+console.log(searchstring);
+
 location.href= '/search/pixelart/' + searchstring;
+
+};
+
+function changebtncolor(i, color){
+
+var strcolor = color.toHEXA().toString();
+var colorbtn =  document.getElementsByClassName('color'+(i))[0];
+colorbtn.style.backgroundColor = strcolor;
 
 
 };
 
 
+const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
+
+
+colorsleft = {{numcolors}};
+var deletedcolors = [];
+
+for(let i =0; i < 5 - colorsleft; i++){
+    deletedcolors.push(5-i);
+};
+
+
+for (let i =0; i < colorsleft; i++){
+
+  // Simple example, see optional options for more configuration.
+
+var colorbtn =  document.getElementsByClassName('color'+(i+1))[0];
+var color = rgb2hex(colorbtn.style.backgroundColor);
+
+Pickr.create({
+    el: '.color' + (i+1),
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    default: color,
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+}).on('change', (color, source, instance) => {
+    changebtncolor(i+1, color);
+    //console.log('Event: "change"', color);
+})
+}
+
+
+function delColor(el, id){
+
+if (colorsleft > 1){
+var element = el; // remove calling delete button
+element.remove()
+
+var colorbtn = document.getElementById(id); // remove color button
+var parent = colorbtn.parentNode;
+colorbtn.remove();
+parent.remove();
+
+colorsleft = colorsleft - 1;
+deletedcolors.push(id);
+
+}
+
+};
+
+function addColor(){
+
+if (colorsleft < 5){
+
+//var test = document.querySelectorAll('[id=parentc]');
+//console.log(test);
+
+var newid = deletedcolors.pop();
+
+
+var container = document.getElementById("container");
+var coloranddel = document.getElementById("parentc");
+
+var newcoloranddel =  coloranddel.cloneNode(true);
+var colorbtn = newcoloranddel.children[0];
+var delbtn = newcoloranddel.children[1];
+
+//console.log(newcoloranddel);
+//console.log(colorbtn);
+//console.log(delbtn);
+
+colorbtn.className = "color"+ newid;
+colorbtn.setAttribute("id", newid);
+colorbtn.attributes['style'].textContent='background-color:#f0f2f2';
+delbtn.setAttribute("id", newid);
+delbtn.setAttribute( "onClick", "delColor(this, " + newid+ ");" );
+
+var addbtn =  document.getElementsByClassName('add')[0];
+container.insertBefore(newcoloranddel, addbtn);
+
+colorsleft = colorsleft + 1;
+
+// new picker for new button
+
+Pickr.create({
+    el: '.color' + (newid),
+    theme: 'nano', // or 'monolith', or 'nano'
+  // Don't replace 'el' Element with the pickr-button, instead use 'el' as a button.
+    // If true, appendToBody will also be automatically true.
+    useAsButton: true,
+    default: '#f0f2f2',
+    swatches: [
+    ],
+    components: {
+        // Main components
+        preview: true,
+        opacity: false,
+        hue: true,
+        // Input / output Options
+        interaction: {
+            hex: true,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: false,
+            save: false
+        }
+    }
+}).on('change', (color, source, instance) => {
+    changebtncolor(newid, color);
+    //console.log('Event: "change"', color);
+})
+
+
+}
+
+
+};
 
 
 </script>
