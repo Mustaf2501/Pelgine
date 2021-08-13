@@ -1,6 +1,6 @@
 # Pelgine
 
-Pelgine allows one to explore the space of pixelartworks through color palettes. Color based search engines typically allow the user to input a single color or multiple pre-selected color, which can be limiting. Pelgine allows one to search artworks using up to 5 colors of their choice, and gives reccomendations that are both accurate and fast. 
+Pelgine allows one to explore the space of pixelartworks through color palettes. Color based search engines typically allow the user to input a single color or multiple pre-selected color, which can be limiting. Pelgine allows one to search artworks using up to 5 colors of their choice, and gives reccomendations that are both accurate and fast.
 
 
 # Usage
@@ -11,8 +11,8 @@ Pelgine allows one to explore the space of pixelartworks through color palettes.
 
 # To-Do 
 
-1. Allow one to search new datasets: clothing, website layouts, sprites, etc.
-2. Visually show the palette for each artwork on the search page.
+1. Allow one to search new datasets: clothing, website layouts, sprites, etc
+2. Visually show the palette for each artwork on the search page
 
 
 
