@@ -9,6 +9,11 @@ Pelgine allows one to explore the space of pixelartworks through color palettes.
 2. Unzip PJpickle.zip, and place pixeljoint.pickle in the same directory as __init__.py 
 3. run __init__.py and visit http://127.0.0.1:5000/
 
+# To-Do 
+
+1. Allow one to search new datasets: clothing, website layouts, sprites, etc.
+2. Visually show the palette for each artwork on the search page.
+
 
 
 
