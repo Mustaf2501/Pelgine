@@ -5,7 +5,7 @@ Pelgine allows one to explore the space of pixelartworks through color palettes.
 # Usage
 
 1. Install the neccesary packages
-2. Unzip PJpickle.zip, and place pixeljoint.pickle in the same directory as __init__.py 
+2. Unzip PJpickle.zip, and place pixeljoint.pickle in the main directory
 3. run __init__.py and visit http://127.0.0.1:5000/
 
 # To-Do 
