@@ -21,7 +21,7 @@ def home():
     pal = ['250647', 'eba834', '9a243b']
     pal = ["#" + color for color in pal if color != 'none']
 
-    epal = extendpal(pal.copy(), 5)
+    epal = extendpal(pal, 5)
 
     # search k-d tree and put results in artworks
     idurl = []
@@ -67,7 +67,7 @@ def searchpalette(c1,c2,c3,c4,c5):
     pal = [c1,c2,c3,c4,c5]
     pal = ["#"+color for color in pal if color != 'none']
     
-    epal = extendpal(pal.copy(), 5)
+    epal = extendpal(pal, 5)
 
     # search k-d tree and put results in artworks
     idurl = []
