@@ -12,7 +12,7 @@ Pelgine allows one to explore the space of pixelartworks through color palettes.
 
 1. Allow one to search new datasets: clothing, website layouts, sprites, etc
 2. Visually show the palette for each artwork on the search page
-
+3. Allow mixed search -- text + colors
 
 
 
